@@ -1,11 +1,16 @@
 const fs = require("fs");
 
 function saveTasks(filePath, tasks) {
-  fs.writeFileSync(filePath, tasks);
+  fs.writeFileSync(filePath, JSON.stringify(tasks));
+  console.log("Task saved");
 }
 
 function loadTasks(filePath) {
-  fs.readFileSync(filePath);
+  if (!fs.existsSync(filePath)) {
+    return [];
+  }
+  const input = fs.readFileSync(filePath, "utf-8");
+  return JSON.parse(input);
 }
 
 module.exports = { saveTasks, loadTasks };
